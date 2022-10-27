@@ -17,5 +17,5 @@ use App\Http\Controllers\controlGit;
 
 Route::get('/', [controlGit::class, 'PFormulario'])->name('PFormulario');
 Route::get('/tabla', [controlGit::class, 'PTabla'])->name('PTabla');
-
+Route::post('/requestUser', [controlGit::class, 'procesSolid'])->name('PProcess');
 

@@ -1,18 +1,39 @@
 @extends('plant')
 @section('next')
+
+@if(session()->has('confirm'))
+    {!! "<script> Swal.fire('Listo', 'Tu solicitud llego al server', 'succes') </script>" !!}
+    <div class="alert alert-success alert-dimissible fade show text-center" role="alert">
+        <strong>{{session('confirm')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <div>
     <h1 class="mt-3 display-3 text-center">Login</h1>
 </div>
 
-<div class="container text-center w-25">
+@if($errors->any())
+@foreach ($errors->all() as $error)
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>Login Incompleto!</strong>{{$error}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endforeach
+@endif
+
+<div class="container text-center w-50">
     <form action="requestUser" method="post" class="form">
+        @csrf
         <p>
             <label name="user" class="form-label">Introduce nombre de usuario:</label>
-            <input name="inuser" type="text" class="form-input" placeholder="Escribe tu nombre login...">
+            <input name="inuser" type="text" class="form-control" placeholder="Escribe tu nombre login..." value="{{old('inuser')}}">
+            <p class="fv-bold text-danger">{{$errors->first('inuser')}}</p>
         </p>
         <p>
             <label name="pass" class="form-label">Introduce Contraseña:</label>
-            <input name="inpass" type="password" class="form-input" placeholder="Escriba su contraseña...">
+            <input name="inpass" type="password" class="form-control" placeholder="Escriba su contraseña..." value="{{old('inpass')}}">
+            <p class="fv-bold text-danger">{{$errors->first('inpass')}}</p>
         </p>
         <p>
             <label name="feeling" class="form-label">Como estas hoy::</label>
@@ -28,5 +49,5 @@
         </p>
     </form>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
 @stop
